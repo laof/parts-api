@@ -5,12 +5,13 @@
   "license": "MIT",
   "scripts": {
     "format": "prettier --write \"**/*.ts\"",
+    "dev": "ts-node  src/main.ts",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
     "prestart:prod": "rm -rf dist && tsc",
     "start:prod": "node dist/main.js",
     "test": "jest",
-    "build":"tsc && node dist/main.js",
+    "build": "tsc && node dist/main.js",
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
@@ -21,9 +22,11 @@
     "@nestjs/testing": "^4.5.5",
     "@nestjs/websockets": "^4.5.8",
     "cors": "^2.8.4",
+    "marked": "^0.3.19",
     "mysql": "^2.15.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^5.5.6",
+    "trek-captcha": "^0.4.0",
     "typeorm": "^0.1.20",
     "typescript": "^2.6.2"
   },

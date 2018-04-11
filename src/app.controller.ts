@@ -1,11 +1,16 @@
 import { Get, Controller, Post } from '@nestjs/common';
 import { createConnection, Connection } from 'typeorm';
 import { Photo } from './entity/Photo';
+import * as marked from 'marked';
+import { readFileSync } from 'fs';
+
 @Controller()
 export class AppController {
   @Get()
   root(): string {
-    return '18080 : Hello World ';
+    const markstr = readFileSync('api.md').toString();
+    const apiHtml = marked(markstr);
+    return apiHtml;
   }
   @Post('test')
   async getList(): Promise<any> {
