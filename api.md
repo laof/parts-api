@@ -35,7 +35,9 @@
 ### 4、post verification/username 验证用户名重名
 #### 接收参数
 * name:string。
-````javascript
+
+
+``` javascript
 $.ajax({
     url: "http://localhost:18080/verification/username",
     type: 'POST',
