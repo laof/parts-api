@@ -392,3 +392,4 @@ dokcer-compose.yml
 package-lock.json
 ormconfig.json
 dist.zip
+dist
