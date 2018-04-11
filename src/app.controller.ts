@@ -1,6 +1,6 @@
 import { Get, Controller, Post } from '@nestjs/common';
 import { createConnection, Connection } from 'typeorm';
-import { Photo } from 'entity/Photo';
+import { Photo } from './entity/Photo';
 @Controller()
 export class AppController {
   @Get()
