@@ -16,9 +16,9 @@ export class AppController {
   async getList(): Promise<any> {
     return createConnection().then(async connection => {
       const photoRepository = connection.getRepository(Photo);
-      const a = await photoRepository.find();
+      const column = await photoRepository.find();
       connection.close();
-      return a;
+      return column;
     });
   }
 }

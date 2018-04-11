@@ -393,4 +393,4 @@ package-lock.json
 ormconfig.json
 dist.zip
 dist
-checkcode
+checkcode/

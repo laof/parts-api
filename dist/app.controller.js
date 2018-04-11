@@ -12,16 +12,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const Photo_1 = require("./entity/Photo");
+const marked = require("marked");
+const fs_1 = require("fs");
 let AppController = class AppController {
     root() {
-        return '18080 : Hello World ';
+        const markstr = fs_1.readFileSync('api.md').toString();
+        const apiHtml = marked(markstr);
+        return apiHtml;
     }
     async getList() {
         return typeorm_1.createConnection().then(async (connection) => {
             const photoRepository = connection.getRepository(Photo_1.Photo);
-            const a = await photoRepository.find();
+            const column = await photoRepository.find();
             connection.close();
-            return a;
+            return column;
         });
     }
 };

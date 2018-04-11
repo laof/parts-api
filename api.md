@@ -35,8 +35,23 @@
 ### 4、post verification/username 验证用户名重名
 #### 接收参数
 * name:string。
+````javascript
+$.ajax({
+    url: "http://localhost:18080/verification/username",
+    type: 'POST',
+    datType: "JSON",
+    contentType: "application/json",
+    data: JSON.stringify({
+        name: "admin"
+    }),
+    success: function(res) {
+        console.log(res);
+    }
+});
+
+```
 
 #### 返回值示例
 ``` javascript
-{success: true}
+{success: true,exist_name:false}
 ```
