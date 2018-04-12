@@ -1,12 +1,16 @@
  <h1 align="center"> Parts Api文档</h1>
 
+### 前言
+
+测试用：
+账号：admin ，密码：123
 
 ### 1、post user/login 登录
 #### 接收参数
 * name:string。
 * passeword:string。
-* code:string。 验证码
-* code_id:string。 验证码id(接口3)
+* inputCode:string。 输入验证码
+* codeId:string。 验证码id(接口3)
 #### 返回值示例
 ``` javascript
 {success: true, user_id: '5433d5e4e737cbe96dcef312',image:'src/img/my.png'}
@@ -17,10 +21,10 @@
 * name:string。
 * passeword:string。
 * code:string。 验证码
-* code_id:string。 验证码id(接口3)
+* codeId:string。 验证码id(接口3)
 * email:string。
 * gender:string。m男 w女
-* id_photo:image。头像
+* idPhoto:image。头像
 
 #### 返回值示例
 ``` javascript
@@ -57,3 +61,4 @@ $.ajax({
 ``` javascript
 {success: true,exist_name:false}
 ```
+

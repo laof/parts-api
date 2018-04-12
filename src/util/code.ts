@@ -17,13 +17,20 @@ class Code {
         // subscribe to key expire events on database 0
         this.subscriberClient.psubscribe('__keyevent@0__:expired');
     }
+    contrast(codeid: string, code: string): boolean {
+        const outputCode = (this.code[codeid] || '').toString().toLowerCase();
+        const inputCode = code.toString().toLowerCase();
+        this.removeCode(codeid);
+        return outputCode === inputCode;
+    }
     destroy() {
         this.subscriberClient.quit();
         this.schedQueueClient.quit();
         this.code = {};
     }
 
-    removeCode(id) {
+    removeCode(id): any {
+        if (!this.code[id]) { return; }
         delete this.code[id];
         const url = resolve(__dirname, '..', '..', 'checkcode', id + '.jpg');
         unlink(url, () => { });

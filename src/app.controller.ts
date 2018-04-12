@@ -14,11 +14,10 @@ export class AppController {
   }
   @Post('test')
   async getList(): Promise<any> {
-    return createConnection().then(async connection => {
-      const photoRepository = connection.getRepository(Photo);
-      const column = await photoRepository.find();
-      connection.close();
-      return column;
-    });
+    const connection = await createConnection();
+    const photoRepository = connection.getRepository(Photo);
+    const column = await photoRepository.find();
+    connection.close();
+    return column;
   }
 }
