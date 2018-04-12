@@ -21,12 +21,11 @@ let AppController = class AppController {
         return apiHtml;
     }
     async getList() {
-        return typeorm_1.createConnection().then(async (connection) => {
-            const photoRepository = connection.getRepository(Photo_1.Photo);
-            const column = await photoRepository.find();
-            connection.close();
-            return column;
-        });
+        const connection = await typeorm_1.createConnection();
+        const photoRepository = connection.getRepository(Photo_1.Photo);
+        const column = await photoRepository.find();
+        connection.close();
+        return column;
     }
 };
 __decorate([

@@ -1,5 +1,10 @@
 ## comomn
 
+rm a.txt  删除普通文件a.txt
+rm -r a/  删除目录a
+rm -rf  a/  强制删除目录a
+-f  表示强制
+
 redis 后台启动 daemonize yes
 
 $ cd src
