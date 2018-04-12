@@ -1,4 +1,12 @@
 ## comomn
+
+redis 后台启动 daemonize yes
+
+$ cd src
+$ ./redis-server
+
+$ ./redis-server ../redis.conf
+
 redis-server
 redis-cli CONFIG SET notify-keyspace-events "Ex"
 CONFIG GET *
