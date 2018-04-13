@@ -12,14 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const Photo_1 = require("./entity/Photo");
-const marked = require("marked");
-const fs_1 = require("fs");
 let AppController = class AppController {
-    root() {
-        const markstr = fs_1.readFileSync('api.md').toString();
-        const apiHtml = marked(markstr);
-        return apiHtml;
-    }
     async getList() {
         const connection = await typeorm_1.createConnection();
         const photoRepository = connection.getRepository(Photo_1.Photo);
@@ -28,12 +21,6 @@ let AppController = class AppController {
         return column;
     }
 };
-__decorate([
-    common_1.Get(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], AppController.prototype, "root", null);
 __decorate([
     common_1.Post('test'),
     __metadata("design:type", Function),
