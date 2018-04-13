@@ -7,7 +7,7 @@ import * as cookieParser from 'cookie-parser';
 
 import * as cors from 'cors';
 
-import { exec } from 'child_process';
+// import { exec } from 'child_process';
 
 async function bootstrap() {
   const port = 18080;
@@ -27,6 +27,6 @@ async function bootstrap() {
   app.use(express.static('checkcode'));
   app.use(express.static('webapp'));
   await app.listen(port);
-  exec('start http://127.0.0.1:' + port);
+  // exec('start http://127.0.0.1:18080');
 }
 bootstrap();
