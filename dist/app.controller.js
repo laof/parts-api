@@ -44,3 +44,4 @@ AppController = __decorate([
     common_1.Controller()
 ], AppController);
 exports.AppController = AppController;
+//# sourceMappingURL=app.controller.js.map
