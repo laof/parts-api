@@ -7,17 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-<<<<<<< HEAD
-            "name": "test",
-            "program": "${workspaceFolder}/dist/main.js"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "启动程序",
-=======
             "name": "启动",
->>>>>>> 1960abe9b21472c9af327ea80ceb689631390f62
             "program": "${workspaceFolder}\\src\\main.ts",
             "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
