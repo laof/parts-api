@@ -4,23 +4,40 @@ import { guid } from './guid';
 import { Defer } from './Defer';
 import { createWriteStream, unlink } from 'fs';
 import { resolve } from 'path';
+
+interface QueueMessage {
+    file: string;
+    sessionID: string;
+}
+interface CodeCache {
+    file: string;
+    token: string;
+}
+
 class Code {
-    private code = {};
+    private code: { [key: string]: CodeCache } = { FDAE456AFDA546A: { file: 'test.jpg', token: 'ab3d' } };
     private subscriberClient = redis.createClient();
     private schedQueueClient = redis.createClient();
     constructor() {
 
-        this.subscriberClient.on('pmessage', (pattern, channel, expiredKey) => {
-            this.removeCode(expiredKey);
+        this.subscriberClient.on('pmessage', (pattern, channel, obj) => {
+            this.removeCode(JSON.parse(obj) as QueueMessage);
             // TODO: push expiredKey onto some other list to proceed to order fulfillment
         });
         // subscribe to key expire events on database 0
         this.subscriberClient.psubscribe('__keyevent@0__:expired');
     }
-    contrast(codeid: string, code: string): boolean {
-        const outputCode = (this.code[codeid] || '').toString().toLowerCase();
-        const inputCode = code.toString().toLowerCase();
-        this.removeCode(codeid);
+    contrast(sessionID: string, code: string): boolean {
+        let outputCode = '';
+        const cacheCode = this.code[sessionID];
+        if (cacheCode) {
+            outputCode = cacheCode.token.toLowerCase();
+            // 所有条件满足时，不管是否填写正确，都只能验证一次。
+            const queueMessage: QueueMessage = { file: cacheCode.file, sessionID };
+            this.removeCode(queueMessage);
+        }
+        const inputCode = code.toLowerCase();
+
         return outputCode === inputCode;
     }
     destroy() {
@@ -29,29 +46,40 @@ class Code {
         this.code = {};
     }
 
-    removeCode(id): any {
-        if (!this.code[id]) { return; }
-        delete this.code[id];
-        const url = resolve(__dirname, '..', '..', 'checkcode', id + '.jpg');
+    removeCode(obj: QueueMessage): any {
+
+        const oldCode = this.code[obj.sessionID];
+
+        if (oldCode && oldCode.file === obj.file) {
+            delete this.code[obj.sessionID];
+        }
+
+        const url = resolve(__dirname, '..', '..', 'checkcode', obj.file);
         unlink(url, () => { });
     }
 
-    async createCode(): Promise<any> {
-
+    async createCode(sessionID: string): Promise<any> {
         const { token, buffer } = await captcha();
-        const id = guid();
-        const file = id + '.jpg';
+        const file = guid() + '.jpg';
         const img = 'checkcode/' + file;
         const defer = new Defer();
 
         createWriteStream(img).on('finish', () => {
             const code = {
                 src: file,
-                code_id: id,
             };
-            this.code[id] = token;
+            this.code[sessionID] = {
+                token,
+                file,
+            };
             // schedule ORDER_ID "remove_code" to expire in 60 seconds
-            this.schedQueueClient.set(id, '', 'PX', 1000 * 60, redis.print);
+
+            const data = {
+                file,
+                sessionID,
+            } as QueueMessage;
+
+            this.schedQueueClient.set(JSON.stringify(data), '', 'PX', 1000 * 60, redis.print);
             // this.schedQueueClient.quit();
             defer.resolve(code);
         }).end(buffer);

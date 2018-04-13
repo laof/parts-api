@@ -9,7 +9,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "ES2017",
-    "sourceMap": false,
+    "sourceMap": true,
     "allowJs": true,
     "outDir": "./dist",
     "baseUrl": "./src"

@@ -10,7 +10,6 @@
 * name:string。
 * passeword:string。
 * inputCode:string。 输入验证码
-* codeId:string。 验证码id(接口3)
 #### 返回值示例
 ``` javascript
 {success: true, user_id: '5433d5e4e737cbe96dcef312',image:'src/img/my.png'}
@@ -21,7 +20,6 @@
 * name:string。
 * passeword:string。
 * code:string。 验证码
-* codeId:string。 验证码id(接口3)
 * email:string。
 * gender:string。m男 w女
 * idPhoto:image。头像

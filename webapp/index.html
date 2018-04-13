@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>parts Api</title>
+    <link rel="stylesheet" href="css/css.css">
+</head>
+
+<body>
+    <h1 align="center"> Parts Api文档</h1>
+
+    <h4>前言</h4>
+    <p> 测试用： 账号：admin ，密码：123</p>
+
+    <!--   -->
+    <h4> 1、post user/login 登录</h4>
+    <p>接收参数</p>
+    <ul>
+        <li>name:string。</li>
+        <li>passeword:string。</li>
+        <li>inputCode:string。 输入验证码</li>
+    </ul>
+
+    <p>返回值示例 </p>
+    <p> {success: true, user_id: '5433d5e4e737cbe96dcef312',image:'src/img/my.png'}</p>
+    <div>
+
+        <textarea id="login" cols="130" rows="15">
+            $.ajax({
+                url: "user/login",
+                type: 'POST',
+                datType: "JSON",
+                data: {
+                    name: "admin",
+                    password: "123",
+                    inputCode: "nanuk"
+                },
+                success: function (res) {
+                    console.log(res);
+                }
+            });
+        </textarea>
+        <button onclick="send()">send</button>
+    </div>
+
+    <!--   -->
+    <h4> 2、post user/register 注册</h4>
+    <p>接收参数</p>
+    <ul>
+        <li>name:string。</li>
+        <li>passeword:string。</li>
+        <li>code:string。 验证码</li>
+        <li>email:string。</li>
+        <li>gender:string。m男 w女</li>
+        <li>idPhoto:image。头像</li>
+    </ul>
+    <p>返回值示例 </p>
+    <p>{success: true}</p>
+
+    <!--   -->
+    <h4> 3、post verification/code 验证码</h4>
+    <button onclick="code()">code</button>
+    <img src="" id="code" alt="">
+
+    <p>返回值示例 </p>
+    <p>{success: true,image:'src/img/temp1.png'}</p>
+
+    <!--   -->
+    <h4> 4、post verification/username 验证用户名重名</h4>
+    <ul>
+        <li>name:string。</li>
+    </ul>
+    <p>返回值示例 </p>
+    <p>{success: true,exist_name:false}</p>
+
+    <script src="./js/jquery.min.3.3.1.js"></script>
+    <script>
+
+        function code() {
+            $.ajax({
+                url: "verification/code",
+                type: 'GET',
+                datType: "JSON",
+                success: function (res) {
+                    $('#code').attr({ src: res.src, title: res.src });
+                }
+            });
+        }
+        code();
+
+        function send() {
+            var str = document.querySelector('#login').value;
+            eval(str);
+        }
+
+
+    </script>
+</body>
+
+</html>

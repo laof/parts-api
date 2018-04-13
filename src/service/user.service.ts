@@ -45,8 +45,8 @@ export class UserService {
      * @returns {Promise<any>}
      * @memberof UserService
      */
-    async login(user: UserModel): Promise<any> {
-        const contrast = codeService.contrast(user.codeId, user.inputCode);
+    async login(user: UserModel, sessionID: string): Promise<any> {
+        const contrast = codeService.contrast(sessionID, user.inputCode);
 
         if (contrast) {
             const connection = await createConnection();
@@ -55,7 +55,7 @@ export class UserService {
             connection.close();
             return { success: true, login: res.length === 1 };
         } else {
-            return { success: true, login: false };
+            return { success: true, login: '验证码错误' };
         }
 
     }
