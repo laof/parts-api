@@ -6,9 +6,11 @@ import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
 
 import * as cors from 'cors';
-import './sql.service';
+
+import { exec } from 'child_process';
 
 async function bootstrap() {
+  const port = 18080;
   const app = await NestFactory.create(AppModule);
   app.set('views', resolve(__dirname, '..', 'webapp'));
   app.set('view engine', 'ejs');
@@ -24,6 +26,7 @@ async function bootstrap() {
   }));
   app.use(express.static('checkcode'));
   app.use(express.static('webapp'));
-  await app.listen(18080);
+  await app.listen(port);
+  exec('start http://127.0.0.1:' + port);
 }
 bootstrap();

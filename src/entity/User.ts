@@ -21,4 +21,10 @@ export class User extends BaseEntity {
 
     @Column('datetime')
     lastTime: any;
+
+    /**
+     * 用户头像
+     */
+    @Column()
+    idphoto: string;
 }
