@@ -4,9 +4,14 @@ import { Photo } from './entity/Photo';
 import * as marked from 'marked';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-
+import { renderFile } from 'ejs';
 @Controller()
 export class AppController {
+  @Get()
+  root(@Response() response) {
+    const markdown = readFileSync('api.md').toString();
+    return response.render('index', { markdown: marked(markdown) });
+  }
   @Post('test')
   async getList(): Promise<any> {
     const connection = await createConnection();

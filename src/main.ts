@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { resolve } from 'path';
 import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
 
@@ -9,6 +10,9 @@ import './sql.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.set('views', resolve(__dirname, '..', 'webapp'));
+  app.set('view engine', 'ejs');
+
   app.use(cors());
   app.use(cookieParser());
   app.use(session({
